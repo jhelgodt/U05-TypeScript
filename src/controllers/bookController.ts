@@ -1,3 +1,4 @@
+import { RequestHandler } from "express";
 import { Request, Response } from "express";
 import Book from "../models/bookModel";
 
@@ -18,5 +19,18 @@ export const createBook = async (req: Request, res: Response) => {
     res.status(201).json(newBook);
   } catch (err) {
     res.status(400).json({ error: "Failed to create book" });
+  }
+};
+
+export const deleteBook: RequestHandler = async (req, res) => {
+  try {
+    const deletedBook = await Book.findByIdAndDelete(req.params.id);
+    if (!deletedBook) {
+      res.status(404).json({ error: "Book not found" });
+      return;
+    }
+    res.json({ message: "Book deleted" });
+  } catch (err) {
+    res.status(500).json({ error: "Failed to delete book" });
   }
 };

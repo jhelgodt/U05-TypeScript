@@ -1,9 +1,14 @@
 import express from "express";
-import { getAllBooks, createBook } from "../controllers/bookController";
+import {
+  getAllBooks,
+  createBook,
+  deleteBook,
+} from "../controllers/bookController";
 
 const router = express.Router();
 
 router.get("/", getAllBooks);
-router.post("/", createBook); // ← NY
+router.post("/", createBook);
+router.delete("/:id", deleteBook);
 
 export default router;
