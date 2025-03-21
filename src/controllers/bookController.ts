@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
+import Book from "../models/bookModel";
 
-// Dummy-data
-const books = [
-  { id: 1, title: "The Hobbit", author: "J.R.R. Tolkien" },
-  { id: 2, title: "1984", author: "George Orwell" },
-];
-
-// GET alla böcker
-export const getAllBooks = (req: Request, res: Response) => {
-  res.json(books);
+// GET alla böcker från databasen
+export const getAllBooks = async (req: Request, res: Response) => {
+  try {
+    const books = await Book.find();
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch books" });
+  }
 };
