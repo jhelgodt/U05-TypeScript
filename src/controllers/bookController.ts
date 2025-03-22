@@ -5,7 +5,15 @@ import Book from "../models/bookModel";
 // GET alla böcker från databasen
 export const getAllBooks = async (req: Request, res: Response) => {
   try {
-    const books = await Book.find();
+    const { title } = req.query;
+
+    let query = {};
+    if (title) {
+      // Case-insensitive sökning med regex
+      query = { title: { $regex: title as string, $options: "i" } };
+    }
+
+    const books = await Book.find(query);
     res.json(books);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch books" });
