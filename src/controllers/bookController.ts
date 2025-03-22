@@ -14,8 +14,19 @@ export const getAllBooks = async (req: Request, res: Response) => {
 
 // POST – skapa ny bok i databasen
 export const createBook = async (req: Request, res: Response) => {
+  const { title, author, publishedYear, genre } = req.body;
+
+  // Enkel validering: kolla att alla fält finns
+  if (!title || !author || !publishedYear || !genre) {
+    return res
+      .status(400)
+      .json({
+        error: "All fields are required: title, author, publishedYear, genre",
+      });
+  }
+
   try {
-    const newBook = await Book.create(req.body);
+    const newBook = await Book.create({ title, author, publishedYear, genre });
     res.status(201).json(newBook);
   } catch (err) {
     res.status(400).json({ error: "Failed to create book" });
