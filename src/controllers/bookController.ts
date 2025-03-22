@@ -13,16 +13,19 @@ export const getAllBooks = async (req: Request, res: Response) => {
 };
 
 // POST – skapa ny bok i databasen
-export const createBook = async (req: Request, res: Response) => {
+export const createBook = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   const { title, author, publishedYear, genre } = req.body;
 
-  // Enkel validering: kolla att alla fält finns
   if (!title || !author || !publishedYear || !genre) {
-    return res
+    res
       .status(400)
       .json({
         error: "All fields are required: title, author, publishedYear, genre",
       });
+    return;
   }
 
   try {
