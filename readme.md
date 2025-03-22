@@ -11,12 +11,14 @@ https://u05-typescript.onrender.com/api/v1/books
 - Om Projektet
 - Installation och Körning Lokalt
 - Miljövariabler
+- Projektstruktur
 - API Endpoints
 - cURL-exempel
 - Felhantering
 - Datamodell
 - Extra Funktionalitet
 - Tech Stack
+- API-design
 
 ---
 
@@ -49,11 +51,33 @@ Detta är ett RESTful API för att hantera böcker. Det tillåter att skapa, hä
 
 ## Miljövariabler
 
-Innehåll i `.env.example`:
+Exempel på `.env.example`:
 
 ```
 MONGODB_URI=mongodb+srv://<user>:<password>@<cluster>.mongodb.net/books-db?retryWrites=true&w=majority
 PORT=5001
+```
+
+---
+
+## Projektstruktur
+
+```
+.
+├── package-lock.json
+├── package.json
+├── readme.md
+├── src
+│   ├── app.ts
+│   ├── controllers
+│   │   └── bookController.ts
+│   ├── middleware
+│   ├── models
+│   │   └── bookModel.ts
+│   ├── routes
+│   │   └── bookRoutes.ts
+│   └── server.ts
+└── tsconfig.json
 ```
 
 ---
