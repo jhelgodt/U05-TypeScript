@@ -11,7 +11,21 @@ export const getAllBooks = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to fetch books" });
   }
 };
-
+export const getBookById: RequestHandler = async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const book = await Book.findById(bookId);
+    if (!book) {
+      res.status(404).json({ error: "Book not found" });
+      return;
+    }
+    res.json(book);
+    return;
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
+    return;
+  }
+};
 // POST – skapa ny bok i databasen
 export const createBook = async (
   req: Request,
@@ -20,11 +34,9 @@ export const createBook = async (
   const { title, author, publishedYear, genre } = req.body;
 
   if (!title || !author || !publishedYear || !genre) {
-    res
-      .status(400)
-      .json({
-        error: "All fields are required: title, author, publishedYear, genre",
-      });
+    res.status(400).json({
+      error: "All fields are required: title, author, publishedYear, genre",
+    });
     return;
   }
 
